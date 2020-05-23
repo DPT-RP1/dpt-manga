@@ -1,1 +1,1 @@
-# dpt-manga
+# dpt_manga

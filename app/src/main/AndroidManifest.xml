@@ -23,13 +23,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:largeHeap="true"
-        android:theme="@style/Theme.DPT_template">
+        android:theme="@style/Theme.dpt_manga">
 
         <activity
             android:name="com.sony.dpt.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.DPT_template.NoActionBar">
+            android:theme="@style/Theme.dpt_manga.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

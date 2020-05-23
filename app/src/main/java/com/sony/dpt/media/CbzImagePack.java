@@ -16,14 +16,18 @@ import java.util.zip.ZipFile;
 
 public class CbzImagePack implements ImagePack {
 
-    private String path;
+    private final String path;
     private Map<Integer, byte[]> prefetched;
 
-    private Map<Integer, String> pageToFilename;
+    private final Map<Integer, String> pageToFilename;
 
-    private ZipFile cbzFile;
+    private final ZipFile cbzFile;
     private int currentPage = 0;
     private int pageCount;
+
+    public static boolean canLoad(String path) {
+        return path.endsWith("cbz");
+    }
 
     private CbzImagePack(String path) throws IOException {
         this.path = path;
@@ -31,6 +35,7 @@ public class CbzImagePack implements ImagePack {
         this.cbzFile = new ZipFile(new File(path));
         this.pageToFilename = new HashMap<Integer, String>();
         scanForPages();
+        registry.put(path, this);
     }
 
     public static ImagePack open(String path) throws IOException {
@@ -97,5 +102,23 @@ public class CbzImagePack implements ImagePack {
         cbzFile.close();
         prefetched.clear();
         prefetched = null;
+    }
+
+    @Override
+    public byte[] cover() throws IOException {
+        if (prefetched.containsKey(0)) {
+            return prefetched.get(0);
+        }
+        return fetch(0);
+    }
+
+    @Override
+    public String name() {
+        return cbzFile.getName();
+    }
+
+    @Override
+    public String path() {
+        return path;
     }
 }

@@ -1,4 +1,4 @@
-package com.sony.dpt.media;
+package com.sony.dpt.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.sony.dpt.image.ImageView;
+import com.sony.dpt.media.ImagePack;
 import com.sony.dpt.override.UpdateMode;
 
 import java.io.IOException;

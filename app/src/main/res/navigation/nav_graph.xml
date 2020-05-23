@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/thumbnailFragment">
+
+    <fragment
+        android:id="@+id/thumbnailFragment"
+        android:name="com.sony.dpt.views.fragment.ThumbnailFragment"
+        android:label="ThumbnailFragment" >
+        <action
+            android:id="@+id/action_thumbnailFragment_to_imagePackViewerFragment"
+            app:destination="@id/imagePackViewerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imagePackViewerFragment"
+        android:name="com.sony.dpt.views.fragment.ImagePackViewerFragment"
+        android:label="ImagePackViewerFragment" >
+        <argument
+            android:name="imagePackURI"
+            app:argType="string" />
+    </fragment>
+</navigation>

@@ -47,7 +47,7 @@ public class DrawingManager implements DrawingDelegate {
         // This allows for non-stylus compatibility (emulator for ex.)
         detectEmulator();
         epdUtil = SystemUtil.getEpdUtilInstance();
-
+        view.setWillNotDraw(false);
         init(penWidth, handlePressureChanges);
     }
 
