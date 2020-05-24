@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public interface ImagePack {
 
-    Map<String, ImagePack> registry = new HashMap<String, ImagePack>();
+    Map<String, ImagePack> registry = new HashMap<>();
 
     byte[] page(int i) throws IOException;
 

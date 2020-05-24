@@ -56,7 +56,7 @@ public class DrawingManager implements DrawingDelegate {
      */
     private void detectEmulator() {
         if (SystemUtil.getEpdUtilInstance() instanceof SystemUtil.EmulatedEpdUtil) {
-            INTERESTING_TOOL_TYPE = MotionEvent.TOOL_TYPE_FINGER;
+            //INTERESTING_TOOL_TYPE = MotionEvent.TOOL_TYPE_FINGER;
         }
     }
 

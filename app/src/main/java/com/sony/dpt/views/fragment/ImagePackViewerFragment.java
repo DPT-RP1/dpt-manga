@@ -13,12 +13,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import com.sony.dpt.R;
 import com.sony.dpt.controller.DptGestureDetector;
 import com.sony.dpt.controller.DptGestureListener;
+import com.sony.dpt.manga.persistence.MangaDatabase;
+import com.sony.dpt.manga.persistence.MangaVolume;
 import com.sony.dpt.media.CbzImagePack;
 import com.sony.dpt.media.ImagePack;
+import com.sony.dpt.media.ImagePackFactory;
 import com.sony.dpt.views.ImagePackImageView;
 import com.sony.dpt.views.ThumbnailView;
 
@@ -28,11 +32,20 @@ public class ImagePackViewerFragment extends Fragment {
 
     private ImagePackImageView currentView;
     private GestureDetector gestureDetector;
+    private ImagePackFactory imagePackFactory;
+    private MangaDatabase mangaDatabase;
+    private MangaVolume currentVolume;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         setupGestureDetector(context);
+        imagePackFactory = new ImagePackFactory();
+        mangaDatabase = Room.databaseBuilder(
+                context,
+                MangaDatabase.class,
+                "manga-database"
+        ).allowMainThreadQueries().build();
     }
 
     @Nullable
@@ -43,12 +56,15 @@ public class ImagePackViewerFragment extends Fragment {
 
         assert getArguments() != null;
         String path = ImagePackViewerFragmentArgs.fromBundle(getArguments()).getImagePackURI();
+        currentVolume = mangaDatabase.mangaDao().findByPath(path);
 
         try {
-            imagePackImageView.setImagePack(ImagePack.registry.get(path));
-        } catch (IOException e) {
-            e.printStackTrace();
+            imagePackImageView.setImagePack(imagePackFactory.load(path));
+            imagePackImageView.display(currentVolume.currentPage);
+        } catch (IOException ignored) {
+            System.out.println(ignored);
         }
+
 
         currentView = imagePackImageView;
         currentView.setOnTouchListener((v, event) -> {
@@ -65,7 +81,11 @@ public class ImagePackViewerFragment extends Fragment {
             @Override
             public void onFlingRight() {
                 try {
-                    currentView.flipNext();
+                    mangaDatabase.mangaDao()
+                            .moveToPage(
+                                    currentVolume.path,
+                                    currentView.flipNext()
+                            );
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -74,7 +94,10 @@ public class ImagePackViewerFragment extends Fragment {
             @Override
             public void onFlingLeft()  {
                 try {
-                    currentView.flipPrevious();
+                    mangaDatabase.mangaDao().moveToPage(
+                            currentVolume.path,
+                            currentView.flipPrevious()
+                    );
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

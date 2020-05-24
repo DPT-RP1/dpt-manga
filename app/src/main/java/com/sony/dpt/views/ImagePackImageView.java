@@ -42,7 +42,14 @@ public class ImagePackImageView extends ImageView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    private int lastPageDisplayed = 0;
+
+    public void display() throws IOException {
+        display(lastPageDisplayed);
+    }
+
     public void display(int page) throws IOException {
+        lastPageDisplayed = page;
         Glide.with(this)
                 .asBitmap()
                 .load(imagePack.page(page))
@@ -63,23 +70,25 @@ public class ImagePackImageView extends ImageView {
         this.imagePack = imagePack;
     }
 
-    public void flipNext() throws IOException {
+    public int flipNext() throws IOException {
         if (imagePack.currentPage() < imagePack.pageCount() - 1) {
             display(imagePack.currentPage() + 1);
         }
+        return imagePack.currentPage();
     }
 
-    public void flipPrevious() throws IOException {
+    public int flipPrevious() throws IOException {
         if (imagePack.currentPage() > 0) {
             display(imagePack.currentPage() - 1);
         }
+        return imagePack.currentPage();
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         super.surfaceCreated(holder);
         try {
-            display(0);
+            display();
         } catch (IOException e) {
             e.printStackTrace();
         }

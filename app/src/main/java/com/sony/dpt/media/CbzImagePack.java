@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -31,9 +30,9 @@ public class CbzImagePack implements ImagePack {
 
     private CbzImagePack(String path) throws IOException {
         this.path = path;
-        this.prefetched = new HashMap<Integer, byte[]>();
+        this.prefetched = new HashMap<>();
         this.cbzFile = new ZipFile(new File(path));
-        this.pageToFilename = new HashMap<Integer, String>();
+        this.pageToFilename = new HashMap<>();
         scanForPages();
         registry.put(path, this);
     }
@@ -50,12 +49,8 @@ public class CbzImagePack implements ImagePack {
             if (!current.isDirectory()) fileNames.add(current.getName());
         }
 
-        Collections.sort(fileNames, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.compareTo(o2); // TODO: revisit if needed
-            }
-        });
+        // TODO: revisit if needed
+        Collections.sort(fileNames, String::compareTo);
 
         this.pageCount = 0;
         for (String fileName : fileNames) {
@@ -102,6 +97,7 @@ public class CbzImagePack implements ImagePack {
         cbzFile.close();
         prefetched.clear();
         prefetched = null;
+        registry.remove(path);
     }
 
     @Override
