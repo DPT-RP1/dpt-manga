@@ -27,5 +27,11 @@ public abstract class DptGestureListener extends GestureDetector.SimpleOnGesture
 
     public abstract void onFlingRight();
     public abstract void onFlingLeft();
+    public abstract void onSingleTap();
 
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        onSingleTap();
+        return true;
+    }
 }

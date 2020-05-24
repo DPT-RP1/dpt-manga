@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.room.Room;
 
 import com.sony.dpt.R;
@@ -28,6 +29,9 @@ import com.sony.dpt.views.ThumbnailView;
 
 import java.io.IOException;
 
+import static com.sony.dpt.views.fragment.ImagePackViewerFragmentDirections.actionImagePackViewerFragmentToThumbnailFragment;
+import static com.sony.dpt.views.fragment.ThumbnailFragmentDirections.actionThumbnailFragmentToImagePackViewerFragment;
+
 public class ImagePackViewerFragment extends Fragment {
 
     private ImagePackImageView currentView;
@@ -35,6 +39,8 @@ public class ImagePackViewerFragment extends Fragment {
     private ImagePackFactory imagePackFactory;
     private MangaDatabase mangaDatabase;
     private MangaVolume currentVolume;
+    private View viewer;
+    private View menu;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -51,29 +57,35 @@ public class ImagePackViewerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.image_pack_viewer, container, false);
-        ImagePackImageView imagePackImageView = view.findViewById(R.id.image_pack_view);
+        viewer = inflater.inflate(R.layout.image_pack_viewer, container, false);
+        currentView = viewer.findViewById(R.id.image_pack_view);
+        menu = viewer.findViewById(R.id.manga_menu);
+
+        View backButton = menu.findViewById(R.id.back);
+        backButton.setOnClickListener(v ->
+            Navigation
+                    .findNavController(currentView)
+                    .navigate(actionImagePackViewerFragmentToThumbnailFragment())
+        );
 
         assert getArguments() != null;
         String path = ImagePackViewerFragmentArgs.fromBundle(getArguments()).getImagePackURI();
         currentVolume = mangaDatabase.mangaDao().findByPath(path);
 
         try {
-            imagePackImageView.setImagePack(imagePackFactory.load(path));
-            imagePackImageView.display(currentVolume.currentPage);
+            currentView.setImagePack(imagePackFactory.load(path));
+            currentView.display(currentVolume.currentPage);
         } catch (IOException ignored) {
             System.out.println(ignored);
         }
 
-
-        currentView = imagePackImageView;
         currentView.setOnTouchListener((v, event) -> {
             if (event.getToolType(0) == MotionEvent.TOOL_TYPE_FINGER && gestureDetector != null) {
                 return gestureDetector.onTouchEvent(event);
             }
             return false;
         });
-        return view;
+        return viewer;
     }
 
     private void setupGestureDetector(Context context) {
@@ -100,6 +112,19 @@ public class ImagePackViewerFragment extends Fragment {
                     );
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onSingleTap() {
+                switch (menu.getVisibility()) {
+                    case View.VISIBLE:
+                        menu.setVisibility(View.INVISIBLE);
+                        break;
+                    case View.GONE:
+                    case View.INVISIBLE:
+                        menu.setVisibility(View.VISIBLE);
+                        break;
                 }
             }
         });

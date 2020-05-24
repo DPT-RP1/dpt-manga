@@ -6,6 +6,25 @@
     android:background="@android:color/transparent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <LinearLayout
+        android:id="@+id/manga_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top"
+        android:elevation="1dp"
+        android:visibility="invisible"
+        >
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_historypanel_undo_normal"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/back" />
+    </LinearLayout>
+
     <com.sony.dpt.views.ImagePackImageView
         android:id="@+id/image_pack_view"
         android:layout_width="match_parent"

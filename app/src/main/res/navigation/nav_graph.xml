@@ -20,5 +20,8 @@
         <argument
             android:name="imagePackURI"
             app:argType="string" />
+        <action
+            android:id="@+id/action_imagePackViewerFragment_to_thumbnailFragment"
+            app:destination="@id/thumbnailFragment" />
     </fragment>
 </navigation>
