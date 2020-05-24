@@ -13,6 +13,7 @@
         android:orientation="horizontal"
         android:layout_gravity="top"
         android:elevation="1dp"
+        android:background="@drawable/border_bottom"
         android:visibility="invisible"
         >
 
