@@ -23,6 +23,7 @@ import com.sony.dpt.views.ThumbnailView;
 import java.io.IOException;
 import java.util.List;
 
+import static com.sony.dpt.MainActivity.ROOT_PATH;
 import static com.sony.dpt.views.fragment.ThumbnailFragmentDirections.actionThumbnailFragmentToImagePackViewerFragment;
 
 public class ThumbnailFragment extends Fragment {
@@ -33,7 +34,7 @@ public class ThumbnailFragment extends Fragment {
         View view = inflater.inflate(R.layout.thumbnails, container, false);
         final ThumbnailView thumbnailView = view.findViewById(R.id.thumbnail);
 
-        MangaScanner mangaScanner = new MangaScanner(getContext(), "/data/manga");
+        MangaScanner mangaScanner = new MangaScanner(getContext(), ROOT_PATH);
         try {
             mangaScanner.scan();
         } catch (IOException ignored) { }

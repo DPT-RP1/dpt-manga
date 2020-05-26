@@ -1,31 +1,23 @@
 package com.sony.dpt;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sony.dpt.controller.DptGestureDetector;
-import com.sony.dpt.controller.DptGestureListener;
 import com.sony.dpt.drawing.DrawableView;
-import com.sony.dpt.media.CbzImagePack;
-import com.sony.dpt.media.ImagePack;
-import com.sony.dpt.views.ImagePackImageView;
 import com.sony.dpt.network.FtpMount;
 import com.sony.dpt.override.UpdateMode;
 import com.sony.dpt.override.ViewOverride;
-import com.sony.dpt.views.ThumbnailView;
 
 import org.apache.ftpserver.ftplet.FtpException;
 
-import java.io.IOException;
-
 public class MainActivity extends FragmentActivity {
+
+    public static final String ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/dp_app_data/manga";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +28,10 @@ public class MainActivity extends FragmentActivity {
         DrawableView drawableView = findViewById(R.id.pen);
         drawableView.setZOrderOnTop(true);
 
-        FtpMount ftpMount = new FtpMount("/data/manga/", 5050);
-        try {
-            ftpMount.mount();
-        } catch (FtpException e) {
-            e.printStackTrace();
-        }
+        FtpMount ftpMount = new FtpMount(ROOT_PATH, 5050);
+        try { ftpMount.mount(); } catch (FtpException ignored) { }
 
         setHierarchyUpdateMode(getWindow().getDecorView());
-
-        FrameLayout mainLayout = (FrameLayout) findViewById(R.id.main_layout);
-        mainLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-        mainLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println();
-            }
-        });
     }
 
     public void setHierarchyUpdateMode(View parent) {
