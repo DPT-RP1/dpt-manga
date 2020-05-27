@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.room.Room;
 
+import com.sony.dpt.controller.menu.MangaMenuController;
 import com.sony.dpt.manga.persistence.MangaDatabase;
 import com.sony.dpt.manga.persistence.MangaVolume;
 import com.sony.dpt.media.ImagePackFactory;
@@ -23,6 +24,7 @@ public class MangaViewerController {
     private MangaVolume currentVolume;
     private final ImagePackFactory imagePackFactory;
     private final View menu;
+    private final MangaMenuController mangaMenuController;
 
     public MangaViewerController(final Context context, final ImagePackImageView viewer, final View menu) {
         this.context = context;
@@ -34,6 +36,8 @@ public class MangaViewerController {
                 "manga-database"
         ).allowMainThreadQueries().build();
         imagePackFactory = new ImagePackFactory();
+
+        mangaMenuController = new MangaMenuController(menu, viewer);
     }
 
     public void setup() {
@@ -44,6 +48,8 @@ public class MangaViewerController {
             }
             return false;
         });
+
+        mangaMenuController.setup();
     }
 
     public void bootstrap(String path) {
@@ -51,7 +57,13 @@ public class MangaViewerController {
         try {
             viewer.setImagePack(imagePackFactory.load(path));
             viewer.display(currentVolume.currentPage);
+            moveToPage(currentVolume.currentPage);
         } catch (IOException ignored) { }
+    }
+
+    public void moveToPage(int page) {
+        mangaDatabase.mangaDao().moveToPage(currentVolume.path, page);
+        mangaMenuController.moveToPage(page, currentVolume.pageCount);
     }
 
     private void setupGestureDetector(Context context) {
@@ -59,26 +71,15 @@ public class MangaViewerController {
             @Override
             public void onFlingRight() {
                 try {
-                    mangaDatabase.mangaDao()
-                            .moveToPage(
-                                    currentVolume.path,
-                                    viewer.flipNext()
-                            );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    moveToPage(viewer.flipNext());
+                } catch (IOException ignored) { }
             }
 
             @Override
             public void onFlingLeft()  {
                 try {
-                    mangaDatabase.mangaDao().moveToPage(
-                            currentVolume.path,
-                            viewer.flipPrevious()
-                    );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    moveToPage(viewer.flipPrevious());
+                } catch (IOException ignored) { }
             }
 
             @Override
