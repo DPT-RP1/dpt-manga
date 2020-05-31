@@ -2,4 +2,5 @@
     <string name="app_name">dpt_manga</string>
     <string name="progress_text">%1$d / %2$d</string>
     <string name="back">back</string>
+    <string name="options">options</string>
 </resources>

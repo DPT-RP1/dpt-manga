@@ -15,14 +15,16 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_historypanel_undo_normal"
+        android:src="@drawable/btn_pagenation_prev_normal"
         android:background="@android:color/transparent"
         android:contentDescription="@string/back" />
+
     <LinearLayout
         android:id="@+id/page_progress_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="start"
+        android:layout_weight="1"
+        android:gravity="center"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
         <ProgressBar
@@ -38,5 +40,17 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
     </LinearLayout>
+    <ImageButton
+        android:id="@+id/options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:src="@drawable/btn_toolbar_option_normal"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/options" />
+
+
 </LinearLayout>
