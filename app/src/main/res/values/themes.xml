@@ -9,8 +9,8 @@
 
     <style name="progressBarStyle" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_bar_drawable</item>
-        <item name="android:minHeight">3dip</item>
-        <item name="android:maxHeight">3dip</item>
+        <item name="android:minHeight">20dip</item>
+        <item name="android:maxHeight">20dip</item>
     </style>
 
 </resources>

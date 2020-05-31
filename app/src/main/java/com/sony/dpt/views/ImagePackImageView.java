@@ -49,6 +49,10 @@ public class ImagePackImageView extends ImageView {
     }
 
     public void display(int page) throws IOException {
+        // General out of bound protection
+        if (page >= imagePack.pageCount()) page = imagePack.pageCount() - 1;
+        if (page < 0) page = 0;
+
         lastPageDisplayed = page;
         Glide.with(this)
                 .asBitmap()
@@ -59,10 +63,7 @@ public class ImagePackImageView extends ImageView {
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         imageRenderer.flipPage(resource, UpdateMode.UI_DEFAULT_MODE);
                     }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-                    }
+                    @Override public void onLoadCleared(@Nullable Drawable placeholder) { }
                 });
     }
 

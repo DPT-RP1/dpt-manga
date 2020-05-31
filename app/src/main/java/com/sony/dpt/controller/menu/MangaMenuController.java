@@ -17,8 +17,8 @@ import static com.sony.dpt.views.fragment.ImagePackViewerFragmentDirections.acti
 
 public class MangaMenuController {
 
-    private View menu;
-    private ImagePackImageView viewer;
+    private final View menu;
+    private final ImagePackImageView viewer;
     private View backButton;
     private ProgressBar progressBar;
     private TextView progressBarText;
@@ -29,6 +29,10 @@ public class MangaMenuController {
     }
 
     public void setup() {
+        menu.setOnClickListener(v -> {
+            // Do nothing to avoid menu disappearing
+        });
+
         backButton = menu.findViewById(R.id.back);
         backButton.setOnClickListener(v ->
                 Navigation
@@ -42,7 +46,7 @@ public class MangaMenuController {
                 int page = (int) ((event.getX() / (float) v.getWidth()) * progressBar.getMax());
                 try {
                     viewer.display(page);
-                } catch (IOException ignored) { }
+                } catch (Exception ignored) { }
                 moveToPage(
                        page,
                        progressBar.getMax());
@@ -56,6 +60,10 @@ public class MangaMenuController {
     public void moveToPage(int page, int pageCount) {
         progressBar.setMax(pageCount);
         progressBar.setProgress(page);
-        progressBarText.setText(App.getAppResources().getString(R.string.progress_text, page, pageCount));
+        progressBarText.setText(
+                App.getAppResources().getString(R.string.progress_text,
+                        page + 1, // The display is 1-indexed while the underlying pack is 0-indexed
+                        pageCount)
+        );
     }
 }

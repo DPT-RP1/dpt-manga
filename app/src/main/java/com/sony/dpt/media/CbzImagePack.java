@@ -42,7 +42,7 @@ public class CbzImagePack implements ImagePack {
     }
 
     private void scanForPages() {
-        List<String> fileNames = new ArrayList<String>();
+        List<String> fileNames = new ArrayList<>();
         Enumeration<? extends ZipEntry> entries = cbzFile.entries();
         while (entries.hasMoreElements()) {
             ZipEntry current = entries.nextElement();
@@ -52,12 +52,11 @@ public class CbzImagePack implements ImagePack {
         // TODO: revisit if needed
         Collections.sort(fileNames, String::compareTo);
 
-        this.pageCount = 0;
-        for (String fileName : fileNames) {
-            pageToFilename.put(pageCount, fileName);
-            pageCount += 1;
+
+        for (int i = 0; i < fileNames.size(); i++) {
+            pageToFilename.put(i, fileNames.get(i));
         }
-        this.pageCount += 1;
+        this.pageCount = pageToFilename.size();
     }
 
     private void prefetch() {
