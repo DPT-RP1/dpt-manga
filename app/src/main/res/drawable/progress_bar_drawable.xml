@@ -15,9 +15,17 @@
     </item>
     <item android:id="@android:id/progress">
         <clip>
-            <shape>
-                <solid android:color="@android:color/black"/>
-            </shape>
+            <inset
+                android:insetTop="-4dp"
+                android:insetLeft="-4dp"
+                android:insetRight="-4dp">
+
+                <shape android:shape="rectangle">
+                    <stroke android:width="3dp" android:color="@android:color/black" />
+                    <solid android:color="@android:color/white" />
+                </shape>
+
+            </inset>
         </clip>
     </item>
 </layer-list>
