@@ -4,6 +4,7 @@
     <string name="back">back</string>
     <string name="options">options</string>
     <string name="two_page">Side by side</string>
-    <string name="right_to_left">Right to left</string>
+    <string name="right_to_left">Western direction</string>
     <string name="left_to_right">Japanese direction</string>
+    <string name="one_page">Single page</string>
 </resources>

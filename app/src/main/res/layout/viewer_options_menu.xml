@@ -11,27 +11,29 @@
     android:elevation="2dp"
     android:orientation="vertical">
 
-    <Button
+    <ToggleButton
         android:id="@+id/direction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="@string/left_to_right"
+        android:textOff="@string/left_to_right"
+        android:textOn="@string/right_to_left"
         android:textAlignment="textStart"
         android:background="@android:color/white"
-        android:drawableStart="@drawable/ic_btn_pageturn_lefttoright_normal"
+        android:drawableStart="@drawable/direction_option_image"
         android:drawablePadding="20dp"
         android:textSize="20sp"/>
 
-    <Button
+    <ToggleButton
         android:id="@+id/orientation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="@string/two_page"
+        android:textOff="@string/two_page"
+        android:textOn="@string/one_page"
         android:textAlignment="textStart"
         android:background="@drawable/border_top_dotted"
-        android:drawableStart="@drawable/ic_optionmenu_twopainview"
+        android:drawableStart="@drawable/page_option_image"
         android:drawablePadding="20dp"
         android:textSize="20sp"/>
 
