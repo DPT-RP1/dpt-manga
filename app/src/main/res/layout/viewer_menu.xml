@@ -50,7 +50,6 @@
         android:gravity="center_vertical"
         android:src="@drawable/btn_toolbar_option_normal"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/options" />
-
-
+        android:contentDescription="@string/options"
+        />
 </LinearLayout>

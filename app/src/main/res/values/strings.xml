@@ -3,4 +3,7 @@
     <string name="progress_text">%1$d / %2$d</string>
     <string name="back">back</string>
     <string name="options">options</string>
+    <string name="two_page">Side by side</string>
+    <string name="right_to_left">Right to left</string>
+    <string name="left_to_right">Japanese direction</string>
 </resources>

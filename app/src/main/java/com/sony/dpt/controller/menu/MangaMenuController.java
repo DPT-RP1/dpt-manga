@@ -18,14 +18,17 @@ import static com.sony.dpt.views.fragment.ImagePackViewerFragmentDirections.acti
 public class MangaMenuController {
 
     private final View menu;
+    private final View optionsMenu;
     private final ImagePackImageView viewer;
     private View backButton;
+    private View optionsButton;
     private ProgressBar progressBar;
     private TextView progressBarText;
 
-    public MangaMenuController(View menu, ImagePackImageView viewer) {
+    public MangaMenuController(View menu, View optionsMenu, ImagePackImageView viewer) {
         this.menu = menu;
         this.viewer = viewer;
+        this.optionsMenu = optionsMenu;
     }
 
     public void setup() {
@@ -55,6 +58,16 @@ public class MangaMenuController {
         });
 
         progressBarText = menu.findViewById(R.id.page_progress_bar_text);
+
+        optionsButton = menu.findViewById(R.id.options);
+        optionsButton.setOnClickListener(v -> {
+            optionsMenu.setY(optionsButton.getY() + optionsButton.getHeight());
+            if (optionsMenu.getVisibility() == View.VISIBLE) {
+                optionsMenu.setVisibility(View.INVISIBLE);
+            } else {
+                optionsMenu.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void moveToPage(int page, int pageCount) {

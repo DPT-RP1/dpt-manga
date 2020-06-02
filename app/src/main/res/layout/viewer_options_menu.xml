@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewer_options_menu"
+    android:layout_height="wrap_content"
+    android:layout_width="400dp"
+    android:background="@drawable/border_background"
+    android:padding="1dp"
+    android:visibility="invisible"
+    android:layout_gravity="end|top"
+    android:elevation="2dp"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/direction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/left_to_right"
+        android:textAlignment="textStart"
+        android:background="@android:color/white"
+        android:drawableStart="@drawable/ic_btn_pageturn_lefttoright_normal"
+        android:drawablePadding="20dp"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/orientation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/two_page"
+        android:textAlignment="textStart"
+        android:background="@drawable/border_top_dotted"
+        android:drawableStart="@drawable/ic_optionmenu_twopainview"
+        android:drawablePadding="20dp"
+        android:textSize="20sp"/>
+
+</LinearLayout>

@@ -24,12 +24,14 @@ public class MangaViewerController {
     private MangaVolume currentVolume;
     private final ImagePackFactory imagePackFactory;
     private final View menu;
+    private final View optionsMenu;
     private final MangaMenuController mangaMenuController;
 
-    public MangaViewerController(final Context context, final ImagePackImageView viewer, final View menu) {
+    public MangaViewerController(final Context context, final ImagePackImageView viewer, final View menu, final View optionsMenu) {
         this.context = context;
         this.viewer = viewer;
         this.menu = menu;
+        this.optionsMenu = optionsMenu;
         mangaDatabase = Room.databaseBuilder(
                 context,
                 MangaDatabase.class,
@@ -37,7 +39,7 @@ public class MangaViewerController {
         ).allowMainThreadQueries().build();
         imagePackFactory = new ImagePackFactory();
 
-        mangaMenuController = new MangaMenuController(menu, viewer);
+        mangaMenuController = new MangaMenuController(menu, optionsMenu, viewer);
     }
 
     public void setup() {
@@ -87,6 +89,7 @@ public class MangaViewerController {
                 switch (menu.getVisibility()) {
                     case View.VISIBLE:
                         menu.setVisibility(View.INVISIBLE);
+                        optionsMenu.setVisibility(View.INVISIBLE);
                         break;
                     case View.GONE:
                     case View.INVISIBLE:

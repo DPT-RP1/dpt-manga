@@ -17,10 +17,6 @@ import com.sony.dpt.views.ImagePackImageView;
 
 public class ImagePackViewerFragment extends Fragment {
 
-    private ImagePackImageView viewer;
-
-    private View menu;
-    private View layout;
     private Context context;
 
     @Override
@@ -32,14 +28,20 @@ public class ImagePackViewerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        layout = inflater.inflate(R.layout.image_pack_viewer, container, false);
-        viewer = layout.findViewById(R.id.image_pack_view);
-        menu = layout.findViewById(R.id.manga_menu);
+        View layout = inflater.inflate(R.layout.image_pack_viewer, container, false);
+        ImagePackImageView viewer = layout.findViewById(R.id.image_pack_view);
+        View menu = layout.findViewById(R.id.manga_menu);
+
+        View optionsMenu = layout.findViewById(R.id.viewer_options_menu);
 
         assert getArguments() != null;
         String path = ImagePackViewerFragmentArgs.fromBundle(getArguments()).getImagePackURI();
 
-        MangaViewerController mangaViewerController = new MangaViewerController(context, viewer, menu);
+        MangaViewerController mangaViewerController = new MangaViewerController(
+                context,
+                viewer,
+                menu,
+                optionsMenu);
         mangaViewerController.setup();
         mangaViewerController.bootstrap(path);
         return layout;

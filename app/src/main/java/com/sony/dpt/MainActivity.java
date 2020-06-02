@@ -1,11 +1,17 @@
 package com.sony.dpt;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.view.MenuCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.sony.dpt.drawing.DrawableView;
@@ -44,6 +50,4 @@ public class MainActivity extends FragmentActivity {
             }
         }
     }
-
-
 }
