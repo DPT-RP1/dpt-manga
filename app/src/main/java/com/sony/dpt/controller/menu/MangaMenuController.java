@@ -2,16 +2,17 @@ package com.sony.dpt.controller.menu;
 
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.navigation.Navigation;
 
 import com.sony.dpt.App;
 import com.sony.dpt.R;
+import com.sony.dpt.utils.Direction;
 import com.sony.dpt.views.ImagePackImageView;
-
-import java.io.IOException;
 
 import static com.sony.dpt.views.fragment.ImagePackViewerFragmentDirections.actionImagePackViewerFragmentToThumbnailFragment;
 
@@ -66,6 +67,15 @@ public class MangaMenuController {
                 optionsMenu.setVisibility(View.INVISIBLE);
             } else {
                 optionsMenu.setVisibility(View.VISIBLE);
+            }
+        });
+
+        ToggleButton directionToggle = optionsMenu.findViewById(R.id.direction);
+        directionToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                viewer.setDirection(Direction.JAPANESE);
+            } else {
+                viewer.setDirection(Direction.WESTERN);
             }
         });
     }

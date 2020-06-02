@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.sony.dpt.utils.Direction;
 import com.sony.dpt.image.ImageView;
 import com.sony.dpt.media.ImagePack;
 import com.sony.dpt.override.UpdateMode;
@@ -25,6 +26,7 @@ import static com.sony.dpt.image.ImageHelper.scale;
 public class ImagePackImageView extends ImageView {
 
     private ImagePack imagePack;
+    private Direction direction;
 
     public ImagePackImageView(Context context) {
         super(context);
@@ -71,16 +73,24 @@ public class ImagePackImageView extends ImageView {
         this.imagePack = imagePack;
     }
 
+    private int directionToNextOffset() {
+        if (direction == Direction.JAPANESE) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
     public int flipNext() throws IOException {
         if (imagePack.currentPage() < imagePack.pageCount() - 1) {
-            display(imagePack.currentPage() + 1);
+            display(imagePack.currentPage() + directionToNextOffset());
         }
         return imagePack.currentPage();
     }
 
     public int flipPrevious() throws IOException {
         if (imagePack.currentPage() > 0) {
-            display(imagePack.currentPage() - 1);
+            display(imagePack.currentPage() - directionToNextOffset());
         }
         return imagePack.currentPage();
     }
@@ -93,5 +103,9 @@ public class ImagePackImageView extends ImageView {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 }
